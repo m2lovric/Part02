@@ -1,57 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const Course = ({course}) => {
-  return(
-    <>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts}/>
-    </>
-  )
-}
-
-const Header = ({course}) => {
-  return(
-    <>
-      <h1>{course}</h1>
-    </>
-  )
-}
-
-const Part = ({parts}) => {
-  return(
-    <p>{parts.name} {parts.exercises}</p>
-  )
-}
-
-const Content = ({...parts}) => {
-  return(
-    <>
-      {
-        parts.parts.map((el) => {
-          return <Part key={el.id} parts={el} />
-        })
-      }
-    </>
-  )
-}
-
-const Total = ({...parts}) => {
-  const data = parts.parts;
-  let total = data.reduce((sum, el) => {
-    return sum + el.exercises
-  }, 0);
-
-  return(
-    <>
-      <p>Number of exercises {total}</p>
-    </>
-  )
-}
+import Course from './Course';
 
 const App = () => {
-  const course = {
+  const course = [{
     id: 1,
     name: 'Half Stack application development',
     parts: [
@@ -76,11 +28,29 @@ const App = () => {
         id: 4
       }
     ]
+  },
+  {
+    name: 'Node.js',
+    id: 2,
+    parts: [
+      {
+        name: 'Routing',
+        exercises: 3,
+        id: 1
+      },
+      {
+        name: 'Middlewares',
+        exercises: 7,
+        id: 2
+      }
+    ]
   }
-
+  ]
   return(
     <div>
-      <Course course={course} />      
+      {course.map((el) => {
+        return <Course key={el.id} course={el} />
+      })}      
     </div>
   )
 }
