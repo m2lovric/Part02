@@ -38,9 +38,13 @@ function App() {
         name: newName,
         number: newNumber
       }
-      setPerson(person.concat(newPerson));
-      setNewName('');
-      setNewNumber('');
+      axios
+        .post('http://localhost:3002/persons', newPerson)
+        .then(res => {
+          setPerson(person.concat(res.data));
+          setNewName('');
+          setNewNumber('');
+        })      
     }else{
       alert(`${newName} is already added to phonebook`);
     }    
