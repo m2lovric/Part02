@@ -3,7 +3,6 @@ import './App.scss';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import axios from 'axios';
 import services from './services/axios-service';
 
 function App() {
@@ -44,6 +43,16 @@ function App() {
       alert(`${newName} is already added to phonebook`);
     }    
   }
+
+  const deletePerson = (id, name) => {
+    if(window.confirm(`Delete ${name}`)){
+      services.deletePerson(id).then(res => {
+        console.log(`Person ${id} is deleted.`);
+        services.getAll().then(persons => setPerson(persons));
+      })
+    }
+  }
+
   return (
     <div className="app">
       <h2>Phonebook</h2>
@@ -55,7 +64,7 @@ function App() {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <Persons person={person} search={search} />
+      <Persons person={person} search={search} deletePerson={deletePerson} />
     </div>
   );
 }

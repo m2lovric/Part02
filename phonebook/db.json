@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": 2
@@ -21,19 +16,9 @@
       "id": 4
     },
     {
-      "name": "Someone",
-      "number": "13291203",
-      "id": 5
-    },
-    {
-      "name": "Joe",
-      "number": "34-22-324252",
+      "name": "Jack Dorsey",
+      "number": "81-23-123143",
       "id": 6
-    },
-    {
-      "name": "Alex",
-      "number": "67-123-4124",
-      "id": 7
     }
   ]
 }
