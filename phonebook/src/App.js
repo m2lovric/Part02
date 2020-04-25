@@ -4,12 +4,14 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import services from './services/axios-service';
+import Notification from './components/Notification';
 
 function App() {
   const [person, setPerson] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     services.getAll().then(persons => setPerson(persons));
@@ -38,9 +40,12 @@ function App() {
         setPerson(person.concat(update));
         setNewName('');
         setNewNumber('');
+        setMessage(`${newName} is added.`);
+        setTimeout(() => {
+          setMessage(null);
+        },5000);
       })      
     }else{
-      console.log("already in phonebook")
       if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
         const element = person.find(el => el.name === newName);
         const updatedPerson = {
@@ -48,10 +53,13 @@ function App() {
           number : newNumber
         }
         services.updateNumber(element.id, updatedPerson).then(res => {
-          console.log('number is updated');
           setNewName('');
           setNewNumber('');
           services.getAll().then(persons => setPerson(persons));
+          setMessage(`${element.name} number is updated.`);
+          setTimeout(() => {
+            setMessage(null);
+          },5000);
         })
       }
     }    
@@ -69,6 +77,7 @@ function App() {
   return (
     <div className="app">
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter handleSearch={handleSearch} search={search}/>
       <h2>Add a new number</h2>
       <PersonForm 
