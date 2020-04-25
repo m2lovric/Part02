@@ -12,6 +12,7 @@ function App() {
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
   const [message, setMessage] = useState('');
+  const [err, setErr] = useState('');
 
   useEffect(() => {
     services.getAll().then(persons => setPerson(persons));
@@ -61,6 +62,12 @@ function App() {
             setMessage(null);
           },5000);
         })
+        .catch(err => {
+          setErr(`${element.name} has already been removed from server.`);
+          setTimeout(() => {
+            setErr(null);
+          },5000);
+        })
       }
     }    
   }
@@ -77,7 +84,7 @@ function App() {
   return (
     <div className="app">
       <h2>Phonebook</h2>
-      <Notification message={message} />
+      <Notification message={message} err={err} />
       <Filter handleSearch={handleSearch} search={search}/>
       <h2>Add a new number</h2>
       <PersonForm 
