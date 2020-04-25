@@ -17,4 +17,14 @@ const deletePerson = (id) => {
   return req.then(res => res.data);
 }
 
-export default {getAll, newPerson, deletePerson}
+const updateNumber = (id, obj) => {
+  const req = axios.put(`${url}/${id}`,obj);
+  return req.then(res => res.data);
+}
+
+export default {
+  getAll, 
+  newPerson, 
+  deletePerson,
+  updateNumber
+}

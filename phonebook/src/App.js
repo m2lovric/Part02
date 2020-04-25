@@ -29,7 +29,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(person.find(el => el.name !== newName)){
+    if(!person.find(el => el.name === newName)){
       const newPerson = {
         name: newName,
         number: newNumber
@@ -40,7 +40,20 @@ function App() {
         setNewNumber('');
       })      
     }else{
-      alert(`${newName} is already added to phonebook`);
+      console.log("already in phonebook")
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        const element = person.find(el => el.name === newName);
+        const updatedPerson = {
+          ...element,
+          number : newNumber
+        }
+        services.updateNumber(element.id, updatedPerson).then(res => {
+          console.log('number is updated');
+          setNewName('');
+          setNewNumber('');
+          services.getAll().then(persons => setPerson(persons));
+        })
+      }
     }    
   }
 
